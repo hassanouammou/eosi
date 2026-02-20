@@ -1,0 +1,114 @@
+:root {
+    --battery-report-heading-color: #11eef4;
+    --breadcrumbs-grey-divider: #cccccc;
+    --breadcrumbs-grey-dividend: #999999;
+    --breadcrumbs-green-last-dividend: #009578;
+    --breadcrumbs-last-dividend-weight: 500;
+    --breadcrumbs-arrow: '\203a';
+    --error-color: #D8000C;
+    --error-background-color: #FFBABA;
+    --warning-color: #9F6000;
+    --warning-background-color: #FEEFB3;
+    --gs-background-color: #c9d6ff;
+    --gs-linear-background-color: linear-gradient(to right, #e2e2e2, #c9d6ff);
+    --outside-table-border-color: rgb(140 140 140);
+    --inside-table-border-color: rgb(160 160 160);
+    --main-background-color: #051937;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Satoshi', sans-serif;
+    scroll-behavior: smooth;
+    box-sizing: border-box;
+}
+
+html, body, #container {
+    height: 100%;
+    width: 100%;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#container :is(#search-bar, table) {
+    min-width: 50%;
+    max-width: 50%;
+}
+
+table {
+    table-layout: fixed;
+    & tr {
+        background-color: var(--main-background-color);
+        color: #ffffff;
+    }
+    & td {
+        color: #000000;
+    }
+}
+
+table {
+    & #id {
+        width: 6%;
+    }
+    & #firstname {
+        width: 20%;
+        padding: 0 10px;
+    }
+    & #lastname {
+        width: 20%;
+        padding: 0 10px;
+    }
+    & #email {
+        padding: 0 10px;
+        width: calc(100% - 6% - 20% - 20%);
+    }
+}
+
+table {
+    & .ids {
+        text-align: center;
+    }
+    & .firstnames {
+
+    }
+    & .lastnames {
+
+    }
+    & .emails {
+
+    }
+}
+
+#search-bar {
+    display: flex;
+    background-color: red;
+    border: 1px solid #000000;
+    & :is(#in-id, #in-firstname, #in-lastname, #in-email) {
+        height: 25px;
+        font-size: 1rem;
+        border: none;
+        outline: none;
+    }
+    & #in-id {
+        width: 6%;
+        text-align: center;
+    }
+    & #in-firstname {
+        width: 20%;
+        padding: 0 10px;
+    }
+    & #in-lastname {
+        width: 20%;
+        padding: 0 10px;
+    }
+    & #in-email {
+        padding: 0 10px;
+        width: calc(100% - 6% - 20% - 20%);
+    }
+}

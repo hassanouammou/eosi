@@ -1,0 +1,135 @@
+/* The Main Content */
+.main .form {
+    height: 100%;
+    width: 100%;
+}
+
+.container .form {
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+
+    & .smta {
+        height: 6%;
+        background-color: #051937;
+    }
+
+    & .main-form {
+        flex-grow: 1;
+    }
+}
+
+.form .smta {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+
+    & > * {
+        height: 100%;
+        padding: 0 15px;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        color: #ffffff;
+    }
+
+    & > *:not(:first-child) {
+        border-left: 1px solid #ffffff;
+    }
+
+    & > *:first-child {
+        border-left: 1px solid #ffffff;
+    }
+}
+
+.form .main-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 6px;
+
+    
+    
+    & .buttons {
+        display: flex;
+        justify-content: right;
+        & #update-profile-btn {
+            padding: 3px 10px;
+        }
+    }
+        
+
+    & > * {
+        width: 50%;
+    }
+
+    & > span {
+        font-size: 1.5em;
+        text-align: center;
+    }
+
+    & .input {
+        display: flex;
+        flex-direction: column;
+        & label {
+            font-size: 15px;
+            font-variant: small-caps;
+        }
+
+        & input, & textarea, & select {
+            padding: 2px;
+        }
+
+        & input[disabled] {
+            background-color: #ffffff;
+            color: #000000;
+            border: 1px solid #000000;
+        }
+
+        & input, & select {
+            height: 30px;
+        }
+
+        & textarea {
+            min-height: 70px;
+            max-height: 85px;
+            max-width: 100%;
+        }
+    }
+
+    & .fake-file {
+        & button {
+            padding: 4px 10px;
+        }
+    }   
+}
+
+.attention--pop-up {
+    position: absolute;
+    color: #051937;
+    left: 53%;
+    top: 8.6%;
+    width: 30%;
+    transform: translate(-40%, -50%);
+    padding: 15px;
+    background-color: #ffffff;
+
+    & *:is(button) {
+        text-decoration: none;
+        outline: none;
+        border: 1px solid #000000;
+        padding: 0 8px;
+        color: #000000;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    & a {
+        color: #000000;
+    }
+
+    display: flex;
+    flex-direction: column;
+    row-gap: 4px;
+}

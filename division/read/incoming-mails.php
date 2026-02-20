@@ -1,0 +1,170 @@
+<?php 
+    require_once '../DIVISION.php';
+    $userpath = <<<HTML
+        <li><a>Courriers</a></li>
+        <li><a href="incoming-mails.php">Courriers à Arrivée</a></li>
+    HTML;
+
+    if ($_SERVER['REQUEST_METHOD'] === 'GET' && !empty($_GET)) {
+        $db_connection = Database::connect();
+        $table_heading = "Les Courriers à Arrivée Recherchés";
+
+        $real_id                = $_GET['id']                ?? null;
+        $real_year              = $_GET['year']              ?? null;
+        $real_transmitter       = $_GET['transmitter']       ?? null;
+        $real_number            = $_GET['number']            ?? null;
+        $real_subject           = $_GET['subject']           ?? null;
+        $real_transmission_date = $_GET['transmission_date'] ?? null;
+
+        $id                     = isset($_GET['id'])                ? $db_connection -> quote(trim(                     $_GET['id'])) : null;
+        $year                   = isset($_GET['year'])              ? $db_connection -> quote(trim(                   $_GET['year'])) : null;
+        $transmitter            = isset($_GET['transmitter'])       ? $db_connection -> quote('%'.trim(    $_GET['transmitter']).'%') : null;
+        $number                 = isset($_GET['number'])            ? $db_connection -> quote('%'.trim(         $_GET['number']).'%') : null;
+        $subject                = isset($_GET['subject'])           ? $db_connection -> quote('%'.trim(        $_GET['subject']).'%') : null;
+        $transmission_date      = isset($_GET['transmission_date']) ? $db_connection -> quote(trim(      $_GET['transmission_date'])) : null;
+        
+        $id_cond                = isset(               $id) ? "id                                   = $id                    " : null;
+        $transmission_date_cond = isset($transmission_date) ? "transmission_date                    = $transmission_date     " : null;
+        $year_cond              = isset(             $year) ? "EXTRACT(YEAR FROM transmission_date) = $year                  " : null;
+        $number_cond            = isset(           $number) ? "TRIM(LOWER(number))                  LIKE LOWER($number)      " : null;
+        $transmitter_cond       = isset(      $transmitter) ? "TRIM(LOWER(transmitter))             LIKE LOWER($transmitter) " : null;
+        $subject_cond           = isset(          $subject) ? "TRIM(LOWER(subject))                 LIKE LOWER($subject)     " : null;
+        
+        
+        $always_receiver_name = $db_connection -> quote($division -> get("name"));
+        $conditions = array_kill_null_values(
+            [$id_cond, $transmitter_cond, $number_cond, 
+            $subject_cond, $transmission_date_cond, $year_cond, "LOWER(receiver) = LOWER($always_receiver_name)"]
+        );
+
+        $stmt = put_conditions_inside_sql_select("\"IncomingMail\"", $conditions);
+        
+        $incoming_mails = array();
+        $stmt = $db_connection -> query($stmt);
+        while ($incoming_mail = $stmt -> fetch(PDO::FETCH_OBJ)) {
+            array_push($incoming_mails, new IncomingMail(incoming_mail_id: $incoming_mail -> id));
+        }
+    } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['delete_incoming_mail'])) {
+            $location =  put_values_in_url_for_get_request(
+                baseurl: 'DELETE.php?target=incoming_mail&', argument_name: "incoming_mail_id", values: $_POST['checked_incoming_mails']
+            );
+            header("Location: $location");
+        } elseif (isset($_POST['update_incoming_mail'])) {
+            $location = "../update/incoming-mail.php?incoming_mail_id={$_POST['checked_incoming_mails'][0]}";
+            header("Location: $location");
+        } else {
+            $location = from_post_make_its_arguments_in_url(baseurl: "incoming-mails.php");
+            header("Location: $location");
+        }
+    } else {
+        $incoming_mails = $division -> get_incoming_mails();
+        $table_heading = "Les Courriers à Arrivée";
+    }
+?> 
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <?php echo Page::get_head() ?>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.dataTables.css" />
+    <script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
+    <link rel="stylesheet" href="../asset/style/read/incoming-mails.css">
+    <title>Courriers à Arrivée | Bureau d'Ordre</title>
+</head>
+<body>
+    <div id="container" class="container">
+        <header id="header"><?php echo Page::get_header($userpath) ?></header>
+        <aside id="aside"><?php echo Page::get_aside() ?></aside>
+        <main id="main">
+            <form method="post" class="form">
+                <div class="smta">
+                    <?php 
+                        $visibility = isset($_GET['id']) ? 'hidden' : 'visible';  
+                        $table_heading = "Le Courrier de Départ Reçu";
+                    ?>
+                    <select name="year" id="year-option" style="visibility: <?= $visibility ?>">
+                        <?php 
+                            if (isset($_GET['year']) && $_GET['year']) {
+                                $years = array_reverse(range(2020, 2024));
+                                echo "<option value=''>Tous Les Années</option>";
+                                for ($i = 0; $i < count($years); $i++) { 
+                                    echo  ($_GET['year'] == $years[$i]) 
+                                    ? "<option value='{$years[$i]}' selected>{$years[$i]}</option>" 
+                                    : "<option value='{$years[$i]}'>{$years[$i]}</option>";
+                                }
+                            } else {
+                                $years = array_reverse(range(2020, 2024));
+                                echo "<option value='' selected disabled>Tous Les Années</option>";
+                                for ($i = 0; $i < count($years); $i++) { 
+                                    echo  "<option value='{$years[$i]}'>{$years[$i]}</option>";
+                                }
+                            }
+                        ?>
+                    </select>
+                    <div id="non-year-options">
+                        <button id="search-button" style="visibility: <?= $visibility ?>" type="button" title="Rechercher">
+                            Rechercher
+                        </button>
+                        <?= 
+                            isset($_GET['id']) 
+                            ? "<a title='Retourner' href='dashboard.php'>Retourner</a>"
+                            : ""; 
+                        ?>
+                    </div>
+                </div>
+                <div class="table">
+                    <span class="heading"><?php echo $table_heading ?></span>
+                    <div id="om-search-form">
+                        <input placeholder="Émetteur"           type="text" name="transmitter"       value="<?=  $real_receiver          ?? '' ?>">
+                        <input placeholder="Numéro de Courrier" type="text" name="number"            value="<?=  $real_number            ?? '' ?>">
+                        <input placeholder="Objet"              type="text" name="subject"           value="<?=  $real_subject           ?? '' ?>">
+                        <input placeholder="Date"               type="text" name="transmission_date" value="<?=  $real_transmission_date ?? '' ?>">
+                        <div id="om-options">
+                            <button id="search-reset-im" type="reset">Réinitialiser</button>
+                            <button type="submit" name="search_incoming_mails">Rechecher</button>
+                        </div>
+                    </div>
+                    <table id="myTable" class="cell-border">
+                        <thead>
+                            <tr>
+                                <th id="destinataire" class="dt-head-center">Destinataire</th>
+                                <th id="émetteur" class="dt-head-center">Émetteur</th>
+                                <th id="numéro-de-courrier" class="dt-head-center">Numéro de Courrier</th>
+                                <th id="objet" class="dt-head-center">Objet</th>
+                                <th id="date" class="dt-head-center">Date</th>
+                                <th id="courrier-éléctronique" class="dt-head-center">Courrier Éléctronique</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php 
+                                if (!(count($incoming_mails) === 0)) {
+                                    foreach ($incoming_mails as $index => $incoming_mail) {
+                                        $electronic_mail_name = $incoming_mail -> get('electronic_mail_name');
+                                        echo "
+                                            <tr>
+                                            <td class='receiver'>{$incoming_mail->get('receiver')}</td>
+                                                <td class='transmitter'>{$incoming_mail->get('transmitter')}</td>
+                                                <td class='number'>{$incoming_mail->get('number')}</td>
+                                                <td class='subject'>{$incoming_mail->get('subject')}</td>
+                                                <td class='transmission_date'>{$incoming_mail->get('transmission_date')}</td>
+                                                <td>
+                                                    <div class='options'>
+                                                        <a href='../../upload/electronic-mail/incoming-mail/{$electronic_mail_name}' target='_blank'>Consulter</a><hr>
+                                                        <a href='../../upload/download.php?incoming_mail_name={$electronic_mail_name}'>Télécharger</a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ";
+                                    }   
+                                }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </main>
+    </div>
+    <script src="../asset/javascript/read/incoming-mails.js"></script>
+</body>
+</html>

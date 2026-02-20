@@ -1,0 +1,206 @@
+/* The Main Content */
+#main .form {
+    height: 100%;
+    width: 100%;
+}
+
+#container .form {
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+
+    & .smta {
+        height: 40px;
+        background-color: #051937;
+    }
+
+    & .table {
+        flex-grow: 1;
+    }
+}
+
+.form .smta {
+    display: flex;
+    justify-content: space-between;
+    & #year-option {
+        background-color: #051937;
+        cursor: pointer;
+        color: #ffffff;
+        padding: 0 4px;
+        border-right: 1px solid #ffffff;
+        &,  &:focus {
+            outline: none;
+        }
+    }
+
+    & #non-year-options {
+        display: flex;
+        align-items: center;
+        justify-content: right;
+
+        & button {
+            background-color: #051937;
+            cursor: pointer;
+        }
+
+        & button,
+        & a {
+            height: 100%;
+            padding: 0 15px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #ffffff;
+            border: none;
+            font-size: 15px;
+        }
+
+        &>*:not(:first-child) {
+            border-left: 1px solid #ffffff;
+        }
+
+        &>*:first-child {
+            border-left: 1px solid #ffffff;
+        }
+    }
+}
+
+.table {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+
+    & > * {
+        width: 85%;
+        
+    }
+    .heading {
+        font-size: 1.6em;
+        text-align: center;
+        display: block;
+    }
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+
+table {
+    border-collapse: collapse;
+    border: 2px solid #051937;
+    width: 100%;
+    & td, & th {
+        border: 2px solid #051937;
+    }
+
+    & th {
+        background-color: #051937;
+        color: #ffffff;
+    }
+    & td:last-of-type {
+        .options {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            column-gap: 10px;
+            & a {
+                color: #000000;
+            }
+            & hr {
+                height: 20px;
+            }
+        }
+    }
+}
+
+#om-search-form {
+    display: flex;
+    border: 2px solid #051937;
+    padding: 4px;
+    width: 85%;
+    max-width: 85%;
+    min-width: 85%;
+    & input {
+        text-align: center;
+        border: none;
+        &::placeholder {
+            text-align: center;
+        }
+        &:focus {
+            outline: none;
+        }
+        &[placeholder="Destinataire"] {
+            width: 13.5%;
+            margin-left: 15%;
+        }
+        &[placeholder="Numéro de Courrier"] {
+            width: 16%;
+        }
+        &[placeholder="Objet"] {
+            width: 24%;
+        }
+        &[placeholder="Date"] {
+            width: 12%;
+        }
+    }
+    & #om-options {
+        display: flex;
+        gap: 5px;
+        margin-left: auto;
+        & button {
+            padding: 2px;
+            width: fit-content;
+        }
+    }
+}
+
+table {
+    & #émetteur {
+        width: 15%;
+    }
+    & #destinataire {
+        width: 15%;
+    }
+    & #numéro-de-courrier {
+        width: 15%;
+    }
+    & #objet {
+        width: 27%;
+    }
+    & #date {
+        width: 12%;
+    }
+    & #courrier-éléctronique {
+        width: 15%;
+    }
+}
+
+table {
+    & .transmitter {
+        text-align: center;
+    }
+    & .receiver {
+        text-align: center;
+    }
+    & .number {
+        text-align: center;
+    }
+    & .subject {
+        text-align: left;
+    }
+    & .transmission_date {
+        text-align: center;
+    }
+    & .options {
+        text-align: center;
+    }
+}
+
+.subject {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 10ch !important;
+    max-width: 10ch !important;
+    min-width: 10ch !important;
+}
