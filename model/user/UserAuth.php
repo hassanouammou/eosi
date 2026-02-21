@@ -60,7 +60,10 @@
             $stmt = $db_connection -> prepare("SELECT user_id FROM \"UserAuth\" WHERE email = ?"); 
             $stmt -> execute([$email]);
             $user_id = $stmt -> fetchColumn();
-            return "localhost/eosi/authentification/reset-password/end.php?user_id=$user_id";
+            $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+            $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+            $base_path = getenv('APP_BASE_PATH') ?: '/eosi';
+            return "{$scheme}://{$host}{$base_path}/authentification/reset-password/end.php?user_id=$user_id";
         }
 
 

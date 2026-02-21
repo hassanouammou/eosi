@@ -1,6 +1,6 @@
 <?php
     class Autoloader {
-        private string $root_app = 'C:/XAMPP/htdocs/eosi/model';
+        private string $root_app = __DIR__;
         private string $for;
 
         private array  $user_classes_name = array(

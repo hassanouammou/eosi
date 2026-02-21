@@ -287,7 +287,7 @@
         public function delete_outgoing_mail
         (int $outgoing_mail_id) : void {
             $outgoing_mail = new OutgoingMail(outgoing_mail_id: $outgoing_mail_id);       
-            unlink("C:/XAMPP/htdocs/eosi/upload/electronic-mail/outgoing-mail/{$outgoing_mail->get('electronic_mail_name')}");
+            unlink(OUTGOING_MAILS_UPLOAD_STORAGE_LINK . "/{$outgoing_mail->get('electronic_mail_name')}");
             $stmt = ($this -> db_connection) -> prepare("DELETE FROM \"OutgoingMail\" WHERE id = ?");
             $stmt -> execute([$outgoing_mail_id]);
             $stmt = ($this -> db_connection) -> prepare("DELETE FROM \"Notification\" WHERE topic = ? AND topic_id = ?");
@@ -357,7 +357,7 @@
         public function delete_incoming_mail
         (int $incoming_mail_id) : void {
             $incoming_mail = new IncomingMail(incoming_mail_id: $incoming_mail_id);
-            unlink("C:/XAMPP/htdocs/eosi/upload/electronic-mail/incoming-mail/{$incoming_mail->get('electronic_mail_name')}");
+            unlink(INCOMING_MAILS_UPLOAD_STORAGE_LINK . "/{$incoming_mail->get('electronic_mail_name')}");
             $stmt = ($this -> db_connection) -> prepare("DELETE FROM \"IncomingMail\" WHERE id = ?");
             $stmt -> execute([$incoming_mail_id]);
             $stmt = ($this -> db_connection) -> prepare("DELETE FROM \"Notification\" WHERE topic = ? AND topic_id = ?");
