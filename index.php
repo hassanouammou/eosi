@@ -52,16 +52,25 @@
         </header>
         <main id="main">
             <section id="home-section" class="section">
-                <img id="picture" src="index/willaya.jpg" alt="Image du Province de Guelmim"/>
-                <div id="paragraph">
-                    <span class="heading"><small>Application de Gestion des Courriers (Bureau d'Ordre)</small></span>
-                    <p class="description">
-                        <span>Système informatisé pour la sestion des courriers du Province de Guelmim</span>
-                        <br/>
-                        <small>(hassanouammou01@gmail.com | adminpwd)</small>
-                    </p>
-                </div>
-            </section>
+    <img id="picture" src="index/willaya.jpg" alt="Image du Province de Guelmim"/>
+    <div id="paragraph">
+        <span class="heading">Gestion des Courriers - Bureau d'Ordre</span>
+        <p style="font-size: 1.05rem; color: #333; margin: 8px 0; font-weight: 500;">
+            <strong>Province de Guelmim</strong>
+        </p>
+        <p style="font-size: 1rem; color: #555; margin: 10px 0; line-height: 1.6;">
+            Ce système permet de gérer et de suivre efficacement tous les courriers entrants et sortants de la province. 
+            Il offre une solution complète pour la consultation, la gestion et le suivi des dossiers administratifs.
+        </p>
+        <p style="font-size: 0.95rem; color: #666; margin-top: 15px; padding: 15px; background: #f9f9f9; border-left: 3px solid #007bff; line-height: 1.6;">
+            <strong style="color: #333;">Identifiants de test :</strong>
+            <br/>
+            Email : <code style="background: #fff; padding: 4px 8px; border-radius: 3px; color: #d32f2f;">hassanouammou01@gmail.com</code>
+            <br/>
+            Mot de passe : <code style="background: #fff; padding: 4px 8px; border-radius: 3px; color: #d32f2f;">adminpwd</code>
+        </p>
+    </div>
+</section>
             <section id="login-section" class="section">
                 <span class="heading">Connecter À Votre Compte ICI</span>
                 <form id="login-form" action="authentification/login.php" method="post">
