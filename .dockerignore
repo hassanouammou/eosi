@@ -1,7 +1,0 @@
-.git
-.gitignore
-.vscode
-.idea
-node_modules
-*.log
-*.zip

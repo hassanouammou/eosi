@@ -55,7 +55,11 @@
                 <img id="picture" src="index/willaya.jpg" alt="Image du Province de Guelmim"/>
                 <div id="paragraph">
                     <span class="heading"><small>Application de Gestion des Courriers (Bureau d'Ordre)</small></span>
-                    <p class="description">Système informatisé de Gestion des Courriers Pour Province de Guelmim</p>
+                    <p class="description">
+                        <span>Système informatisé pour la sestion des courriers du Province de Guelmim</span>
+                        <br/>
+                        <small>(hassanouammou01@gmail.com | adminpwd)</small>
+                    </p>
                 </div>
             </section>
             <section id="login-section" class="section">
