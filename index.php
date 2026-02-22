@@ -48,6 +48,7 @@
             <nav id="navigation-bar">
                 <a class="link" href="#home-section">Acceuil</a>
                 <a class="link" href="#login-section">Connexion</a>
+                <a class="link" href="#mentions-legales">Mentions Légales</a>
             </nav>
         </header>
         <main id="main">
@@ -65,9 +66,9 @@
         <p style="font-size: 0.95rem; color: #666; margin-top: 15px; padding: 15px; background: #f9f9f9; border-left: 3px solid #007bff; line-height: 1.6;">
             <strong style="color: #333;">Identifiants de test :</strong>
             <br/>
-            Email : <code style="background: #fff; padding: 4px 8px; border-radius: 3px; color: #d32f2f;">hassanouammou01@gmail.com</code>
+            Email : <code style="background: #fff; padding: 4px 8px; border-radius: 3px; color: #d32f2f;">hassan.ouammou@province.ma</code>
             <br/>
-            Mot de passe : <code style="background: #fff; padding: 4px 8px; border-radius: 3px; color: #d32f2f;">adminpwd</code>
+            Mot de passe : <code style="background: #fff; padding: 4px 8px; border-radius: 3px; color: #d32f2f;">Adm!n#Prov2024@X9</code>
         </p>
     </div>
 </section>
@@ -93,6 +94,10 @@
                 </form>
             </section>
         </main>
+        <footer id="mentions-legales" style="text-align:center; padding: 16px 10px; color:#666; font-size:0.9rem; line-height:1.7;">
+            © 2026 Province de Guelmim — Tous droits réservés.<br/>
+            Créateur : Hassan Ouammou — Tél : <a href="tel:+212646618329">+212646618329</a> — Email : <a href="mailto:hassanouammou01@gmail.com">hassanouammou01@gmail.com</a>
+        </footer>
     </div>
     <script src="index/main.js"></script>
 </body>
