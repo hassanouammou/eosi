@@ -9,4 +9,9 @@ if [ ! -e "eosi" ]; then
   ln -s . eosi
 fi
 
+if ! php -m | grep -q "pdo_pgsql"; then
+  echo "Erreur: extension PHP pdo_pgsql manquante."
+  exit 1
+fi
+
 exec php -S 0.0.0.0:${PORT} -t .
